@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommonKeyValueCell" id="KGk-i7-Jjw" customClass="CommonKeyValueCell" customModule="MPR" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LuZ-OK-V3P">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="drQ-X4-LYH">
+                                <rect key="frame" x="16" y="14" width="130" height="16"/>
+                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="14"/>
+                                <color key="textColor" red="0.2784313725" green="0.28235294119999998" blue="0.2901960784" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="20"/>
+                                </variation>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GZc-Mw-b0c" customClass="ICTextField" customModule="MPR" customModuleProvider="target">
+                                <rect key="frame" x="152" y="13" width="125" height="18.5"/>
+                                <color key="textColor" red="0.2784313725" green="0.28235294119999998" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                </variation>
+                                <connections>
+                                    <outlet property="delegate" destination="KGk-i7-Jjw" id="YRM-21-DAa"/>
+                                </connections>
+                            </textField>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="moreArrow" translatesAutoresizingMaskIntoConstraints="NO" id="ikh-SH-rpL">
+                                <rect key="frame" x="287" y="9.5" width="25" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="hVd-MG-Nde"/>
+                                    <constraint firstAttribute="width" secondItem="ikh-SH-rpL" secondAttribute="height" multiplier="1:1" id="sXA-Q3-iyA"/>
+                                    <constraint firstAttribute="width" constant="25" id="uZm-3t-dLr"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="GZc-Mw-b0c" firstAttribute="leading" secondItem="drQ-X4-LYH" secondAttribute="trailing" constant="6" id="1vU-BW-Xy4"/>
+                            <constraint firstItem="GZc-Mw-b0c" firstAttribute="centerY" secondItem="LuZ-OK-V3P" secondAttribute="centerY" id="AUv-qx-DDd"/>
+                            <constraint firstItem="ikh-SH-rpL" firstAttribute="centerY" secondItem="LuZ-OK-V3P" secondAttribute="centerY" id="BpM-cd-5N5"/>
+                            <constraint firstItem="GZc-Mw-b0c" firstAttribute="width" secondItem="LuZ-OK-V3P" secondAttribute="width" multiplier="1:2" constant="-35" id="EgT-9H-0vi"/>
+                            <constraint firstItem="drQ-X4-LYH" firstAttribute="centerY" secondItem="LuZ-OK-V3P" secondAttribute="centerY" id="FR5-4T-E8f"/>
+                            <constraint firstItem="drQ-X4-LYH" firstAttribute="leading" secondItem="LuZ-OK-V3P" secondAttribute="leading" constant="16" id="rD2-I8-ADb"/>
+                            <constraint firstItem="ikh-SH-rpL" firstAttribute="leading" secondItem="GZc-Mw-b0c" secondAttribute="trailing" constant="10" id="tV1-Bf-lj9"/>
+                            <constraint firstAttribute="trailing" secondItem="ikh-SH-rpL" secondAttribute="trailing" constant="8" id="zcZ-7W-WEj"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="LuZ-OK-V3P" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="6Ms-K5-3pp"/>
+                    <constraint firstAttribute="trailing" secondItem="LuZ-OK-V3P" secondAttribute="trailing" id="RY3-EM-ymG"/>
+                    <constraint firstAttribute="bottom" secondItem="LuZ-OK-V3P" secondAttribute="bottom" id="h7G-du-pFJ"/>
+                    <constraint firstItem="LuZ-OK-V3P" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="kDZ-7V-Bed"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="imgVW" destination="ikh-SH-rpL" id="aia-9V-1WM"/>
+                <outlet property="titleLbl" destination="drQ-X4-LYH" id="ozQ-lO-9DF"/>
+                <outlet property="valueTF" destination="GZc-Mw-b0c" id="byh-cw-Qss"/>
+            </connections>
+            <point key="canvasLocation" x="106" y="29"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="moreArrow" width="15" height="15"/>
+    </resources>
+</document>

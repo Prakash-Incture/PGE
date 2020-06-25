@@ -1,0 +1,6 @@
+framework module Pods_PGE_POC_PGE_POCUITests {
+  umbrella header "Pods-PGE-POC-PGE-POCUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

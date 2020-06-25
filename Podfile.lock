@@ -1,0 +1,31 @@
+PODS:
+  - Alamofire (4.9.1)
+  - CodableAlamofire (1.1.2):
+    - Alamofire (~> 4.0)
+  - IQKeyboardManagerSwift (6.5.5)
+  - SDWebImage (5.7.3):
+    - SDWebImage/Core (= 5.7.3)
+  - SDWebImage/Core (5.7.3)
+
+DEPENDENCIES:
+  - Alamofire (~> 4.0)
+  - CodableAlamofire
+  - IQKeyboardManagerSwift
+  - SDWebImage (~> 5.0)
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - CodableAlamofire
+    - IQKeyboardManagerSwift
+    - SDWebImage
+
+SPEC CHECKSUMS:
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  CodableAlamofire: b7adfb2e5e980392014b4b3f3b8b62c01b9de4aa
+  IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
+  SDWebImage: 97351f6582ceca541ea294ba66a1fcb342a331c2
+
+PODFILE CHECKSUM: 79a2ec4afe2bb4f70038d2e73c064696f00f7842
+
+COCOAPODS: 1.8.4
