@@ -66,23 +66,23 @@ struct MaterialInfoItem: CellType, KeyValueItem {
     var isMandatory: Bool
 }
 
-struct MaterialInfoModel {
-    var materialCode: String?
-    var manufacturer: String?
-    var materialType: String?
-    var age: String?
-    var application: String?
-    var materialDesc: String?
-    var manufactureSerialNo: String?
-    var purchaseOrder: String?
-    var outage: String?
-    var failedInService: String?
-    var systemPressure: String?
-    var leakNumber: String?
-    var leakGrade: String?
-    var soilType: String?
-    var grade1Failure: String?
-}
+//struct MaterialInfoModel {
+//    var materialCode: String?
+//    var manufacturer: String?
+//    var materialType: String?
+//    var age: String?
+//    var application: String?
+//    var materialDesc: String?
+//    var manufactureSerialNo: String?
+//    var purchaseOrder: String?
+//    var outage: String?
+//    var failedInService: String?
+//    var systemPressure: String?
+//    var leakNumber: String?
+//    var leakGrade: String?
+//    var soilType: String?
+//    var grade1Failure: String?
+//}
 
 struct MaterialInfoLookUps {
     static var manufacturer = ["Borer-Larkin", "Ruecker and Sons", "Ward - Abbott"]

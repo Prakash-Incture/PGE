@@ -11,9 +11,11 @@ import UIKit
 class ProblemInfoViewController: BaseViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    var model = ProblemInfoModel()
+    var problemInfoModel = ProblemInfoModel()
     var imagePickerController = UIImagePickerController()
     var photoCustomView = PhotoPopupView()
+    var mainRequestModel : RequestModel?
+    var requestPersistance : RequestListCoreData?
 
     var imageArray = [UIImage]()
     var actionSheetData: [ActionSheetDataModel] = [ActionSheetDataModel(title: "Photo Library", iconImage: "reporterInfo", isSelected: false), ActionSheetDataModel(title: "Material Info", iconImage: "materialInfo", isSelected: false), ActionSheetDataModel(title: "Problem Info", iconImage: "problemInfo", isSelected: false)]
@@ -29,7 +31,7 @@ class ProblemInfoViewController: BaseViewController {
         imageArray.append(UIImage(named: "imageAdd")!)
         self.tableView?.register(UINib(nibName: "ProblemInfoTableViewCell", bundle: nil), forCellReuseIdentifier: "ProblemInfoTableViewCell")
         self.tableView?.register(UINib(nibName: "AttachmentTableViewCell", bundle: nil), forCellReuseIdentifier: "AttachmentTableViewCell")
-        
+        observeTheNotificationData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,6 +47,18 @@ class ProblemInfoViewController: BaseViewController {
 //    override func selectedBack(sender: UIButton) {
 //        self.navigationController?.popViewController(animated: true)
 //    }
+    
+    func observeTheNotificationData(){
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "StoringProblemInfo"), object: nil, queue: nil) { notification in
+            self.mainRequestModel?.problemInfo = self.problemInfoModel
+            self.requestPersistance?.saveRequest(self.mainRequestModel!, withDate: Date(), type: "")
+            self.removeObserver()
+        }
+    }
+    func removeObserver(){
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "StoringProblemInfo"), object: nil)
+    }
+    
     override func submitBtnClicked(sender: UIButton) {
         
         
@@ -71,39 +85,39 @@ extension ProblemInfoViewController:UITableViewDelegate,UITableViewDataSource{
         cell.sendEnteredData = { value, key in
             switch key {
             case .additional:
-                self.model.additionalInfo = value
+                self.problemInfoModel.additionalInfo = value
             case .cause:
-                 self.model.causeDesc = value
+                 self.problemInfoModel.causeDesc = value
             case .complaint:
-                 self.model.complients = value
+                 self.problemInfoModel.complients = value
             case .correction:
-                 self.model.correction = value
+                 self.problemInfoModel.correction = value
             case .eventNumber:
-                 self.model.eventNumber = value
+                 self.problemInfoModel.eventNumber = value
             case .installedDate:
-                 self.model.installedDate = value
+                 self.problemInfoModel.installedDate = value
             case .MFDate:
-                 self.model.manufaDate = value
+                 self.problemInfoModel.manufaDate = value
             case .materialStored:
-                 self.model.materialStored = value
+                 self.problemInfoModel.materialStored = value
             case .qnty:
-                 self.model.qnty = value
+                 self.problemInfoModel.qnty = value
             case .shortDesc:
-                 self.model.shortDesc = value
+                 self.problemInfoModel.shortDesc = value
             }
             self.tableView.reloadData()
         }
-        cell.additionalCostTF.text = self.model.additionalInfo
-        cell.manufactureDateTF.text = self.model.manufaDate
-        cell.eventNoTF.text = self.model.eventNumber
-        cell.materialStoredTF.text = self.model.materialStored
-        cell.qntyTF.text = self.model.qnty
-        cell.shortDecsTF.text = self.model.shortDesc
-        cell.complientTW.text = self.model.complients
-        cell.correctionTW.text = self.model.correction
-        cell.causeTw.text = self.model.causeDesc
-        cell.causeTF.text = self.model.cause
-        cell.installedDate.text = self.model.installedDate
+        cell.additionalCostTF.text = self.problemInfoModel.additionalInfo
+        cell.manufactureDateTF.text = self.problemInfoModel.manufaDate
+        cell.eventNoTF.text = self.problemInfoModel.eventNumber
+        cell.materialStoredTF.text = self.problemInfoModel.materialStored
+        cell.qntyTF.text = self.problemInfoModel.qnty
+        cell.shortDecsTF.text = self.problemInfoModel.shortDesc
+        cell.complientTW.text = self.problemInfoModel.complients
+        cell.correctionTW.text = self.problemInfoModel.correction
+        cell.causeTw.text = self.problemInfoModel.causeDesc
+        cell.causeTF.text = self.problemInfoModel.cause
+        cell.installedDate.text = self.problemInfoModel.installedDate
         cell.attachmentBtn.addTarget(self, action: #selector(attachmentClicked), for: .touchUpInside)
         return cell
         }else{
@@ -143,7 +157,7 @@ extension ProblemInfoViewController{
         let viewController = storyboard.instantiateViewController(identifier: "SelectionViewController") as?
         SelectionViewController
         viewController?.returnSelectedValue = { value in
-            self.model.cause = value
+            self.problemInfoModel.cause = value
             self.tableView.reloadData()
         }
         viewController?.title = "Select Case/Problem"

@@ -12,6 +12,7 @@ struct RequestModel:Codable {
     var materialRequest : RequestMaterialModel?
     var problemInfo:ProblemInfoModel?
     var incidentModelRequest:GetIncidentModelData?
+    var materialInfo : MaterialInfoModel?
     init(){}
 }
 
@@ -46,6 +47,23 @@ struct ProblemInfoModel:Codable {
     var eventNumber:String?
 }
 
+struct MaterialInfoModel: Codable {
+    var materialCode: String?
+    var manufacturer: String?
+    var materialType: String?
+    var age: String?
+    var application: String?
+    var materialDesc: String?
+    var manufactureSerialNo: String?
+    var purchaseOrder: String?
+    var outage: String?
+    var failedInService: String?
+    var systemPressure: String?
+    var leakNumber: String?
+    var leakGrade: String?
+    var soilType: String?
+    var grade1Failure: String?
+}
 
 struct GetIncidentModelData:Codable {
     var incident_id : String?

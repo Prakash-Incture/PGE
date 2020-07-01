@@ -159,11 +159,13 @@ class BaseViewController: UIViewController {
                     if self.isKind(of: ProblemInfoViewController.self) {
                         NotificationCenter.default.post(name: Notification.Name("StoringProblemInfo"), object: nil, userInfo: nil)
                     }else if  self.isKind(of: MaterialrequestInfoFormVC.self){
-                        NotificationCenter.default.post(name: Notification.Name("StoringProblemInfo"), object: nil, userInfo: nil)
+                        NotificationCenter.default.post(name: Notification.Name("StoringMaterialInfo"), object: nil, userInfo: nil)
                     }else if self.isKind(of: MaterialRequestFormVC.self){
-                        NotificationCenter.default.post(name: Notification.Name("StoringProblemInfo"), object: nil, userInfo: nil)
+                        NotificationCenter.default.post(name: Notification.Name("StoringRequestInfo"), object: nil, userInfo: nil)
                     }
-                     self.navigationController?.popViewController(animated: true)
+                    if let requestListVC = self.navigationController?.viewControllers[1] {
+                        self.navigationController?.popToViewController(requestListVC, animated: true)
+                    }
                  }
                  alertController1.addAction(YesAction1)
                  self.present(alertController1, animated: true, completion: nil)

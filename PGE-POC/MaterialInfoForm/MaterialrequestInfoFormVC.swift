@@ -10,12 +10,15 @@ import UIKit
 
 class MaterialrequestInfoFormVC: BaseViewController {
     
-    var requestModel = RequestMaterialModel()
+//    var requestModel = RequestMaterialModel()
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var tableView: UITableView!
     
     var materialViewModel: MaterialInfoViewModel?
     var materialInfoModel = MaterialInfoModel()
+    var mainRequestModel : RequestModel?
+    var requestPersistance : RequestListCoreData?
+
     
     override func viewDidLoad() {
         // Load custom action sheet
@@ -26,6 +29,8 @@ class MaterialrequestInfoFormVC: BaseViewController {
         materialViewModel = MaterialInfoViewModel(info: materialInfoModel)
         tableView.register(UINib(nibName: "CommonKeyValueCell", bundle: nil), forCellReuseIdentifier: "CommonKeyValueCell")
         tableView.register(UINib(nibName: "KeySwitchCell", bundle: nil), forCellReuseIdentifier: "KeySwitchCell")
+        observeTheNotificationData()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,10 +46,25 @@ class MaterialrequestInfoFormVC: BaseViewController {
 //    override func selectedBack(sender: UIButton) {
 //        self.navigationController?.popViewController(animated: true)
 //    }
+    
+    func observeTheNotificationData(){
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "StoringMaterialInfo"), object: nil, queue: nil) { notification in
+            self.mainRequestModel?.materialInfo = self.materialInfoModel
+            self.requestPersistance?.saveRequest(self.mainRequestModel!, withDate: Date(), type: "")
+            self.removeObserver()
+        }
+    }
+    
+    func removeObserver(){
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "StoringMaterialInfo"), object: nil)
+    }
+    
     override func nextBtnClicked(sender: UIButton) {
                self.view.endEditing(true)
          let storyboard = UIStoryboard(name: "Main", bundle: nil)
          let viewController = storyboard.instantiateViewController(identifier: "ProblemInfoViewController") as? ProblemInfoViewController
+        viewController?.mainRequestModel = self.mainRequestModel
+        viewController?.requestPersistance = self.requestPersistance
          viewController?.title = self.title
          self.navigationController?.pushViewController(viewController!, animated: true)
     }
@@ -61,7 +81,7 @@ extension MaterialrequestInfoFormVC: UITableViewDelegate, UITableViewDataSource{
         
         switch cellDetails.type {
         case .materialCode, .materialDesc, .manufactureSerialNo, .purchaseOrder, .leakNumber, .leakGrade:
-            return getKeyValueCell(data: cellDetails)
+            return getKeyValueCell(data: cellDetails, indexPath : indexPath)
         case .manufacturer, .materialType, .age, .application, .systemPressure, .soilType:
             return getKeyValueDisclosureCell(data: cellDetails)
         case .outage, .failedInService, .grade1Failure:
@@ -114,6 +134,24 @@ extension MaterialrequestInfoFormVC: UITableViewDelegate, UITableViewDataSource{
 //                        self.tableView.reloadData()
                         if let cell = tableView.cellForRow(at: indexPath) as? CommonKeyValueCell{
                             cell.valueTF.text = value
+                            
+                            switch cellDetails.type {
+                            case .manufacturer:
+                                self.materialInfoModel.manufacturer = value
+                            case .materialType:
+                                self.materialInfoModel.materialType = value
+                            case .age:
+                                self.materialInfoModel.age = value
+                            case .application:
+                                self.materialInfoModel.application = value
+                            case .systemPressure:
+                                self.materialInfoModel.systemPressure = value
+                            case .soilType:
+                                self.materialInfoModel.soilType = value
+                            default:
+                                return
+                            }
+                            
                         }
                         
                     }
@@ -125,13 +163,15 @@ extension MaterialrequestInfoFormVC: UITableViewDelegate, UITableViewDataSource{
         }
     }
     
-    func getKeyValueCell(data: MaterialInfoItem) -> CommonKeyValueCell {
+    func getKeyValueCell(data: MaterialInfoItem, indexPath: IndexPath) -> CommonKeyValueCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CommonKeyValueCell") as? CommonKeyValueCell{
             cell.titleLbl.text = data.key
             cell.valueTF.rightDrawable = nil
             cell.imgVW.isHidden = true
             cell.valueTF.placeholder = data.type == .materialCode ? "MXXXXXX" : "Type here"
-            cell.valueTF.text = data.value
+//            cell.valueTF.text = data.value
+            cell.valueTF.delegate = self
+            cell.valueTF.tag = indexPath.row
             return cell
         }else{
             return CommonKeyValueCell()
@@ -154,9 +194,67 @@ extension MaterialrequestInfoFormVC: UITableViewDelegate, UITableViewDataSource{
     func getkeySwitchCell(data: MaterialInfoItem) -> KeySwitchCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "KeySwitchCell") as? KeySwitchCell{
             cell.titleLbl.text = data.key
+            
+            switch data.type {
+            case .outage:
+                self.materialInfoModel.outage = cell.toggleSwitch.isOn ? "Yes" : "No"
+            case .failedInService:
+                self.materialInfoModel.failedInService = cell.toggleSwitch.isOn ? "Yes" : "No"
+            case .grade1Failure:
+                self.materialInfoModel.grade1Failure = cell.toggleSwitch.isOn ? "Yes" : "No"
+            default:
+                return KeySwitchCell()
+            }
+            
             return cell
         }else{
             return KeySwitchCell()
         }
+    }
+}
+
+extension MaterialrequestInfoFormVC: UITextFieldDelegate {
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+//        for value in materialViewModel?.dataArr ?? [] {
+//
+//            switch value.type {
+//            case .materialCode:
+//                self.materialInfoModel.materialCode = textField.text!
+//            case .materialDesc:
+//                self.materialInfoModel.materialDesc = textField.text!
+//            case .manufactureSerialNo:
+//                self.materialInfoModel.manufactureSerialNo = textField.text!
+//            case .purchaseOrder:
+//                self.materialInfoModel.purchaseOrder = textField.text!
+//            case .leakNumber:
+//                self.materialInfoModel.leakNumber = textField.text!
+//            case .leakGrade:
+//                self.materialInfoModel.leakGrade = textField.text!
+//            default:
+//                return
+//            }
+//
+//        }
+        
+        switch textField.tag {
+        case 0:
+            self.materialInfoModel.materialCode = textField.text!
+        case 5:
+            self.materialInfoModel.materialDesc = textField.text!
+        case 6:
+            self.materialInfoModel.manufactureSerialNo = textField.text!
+        case 7:
+            self.materialInfoModel.purchaseOrder = textField.text!
+        case 11:
+            self.materialInfoModel.leakNumber = textField.text!
+        case 12:
+            self.materialInfoModel.leakGrade = textField.text!
+        default:
+            return
+        }
+
+
     }
 }
